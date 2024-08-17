@@ -1,0 +1,2 @@
+# EpidModuleApp
+Epidemiological report creator
