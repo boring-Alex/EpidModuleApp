@@ -1,0 +1,96 @@
+---
+title: "Результаты микробиологического мониторинга в отделении `r params$dataReport@WardName` с `r params$dataReport@StartTime` по `r params$dataReport@EndTime`"
+output:
+  html_document:
+    df_print: paged
+date: "Сборка от `r Sys.Date()`"
+params:
+  dataReport: null
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+##source("headers.R")
+```
+
+```{r hashVal, echo=FALSE, results='asis'}
+cat(paste("Uin:", digest(params$dataContainer, algo = "sha256")))
+```
+
+# Таблица 1. Сводка результатов
+
+```{r summaryInfo, echo=FALSE, results='asis'}
+kable(GetSummaryTab(params$dataReport@SelectedData))
+```
+
+# Выделенные микроорганизмы
+
+## I.	Энтерококки
+
+### Таблица 2. Сводная информация по группе «энтерококки»
+
+```{r enterococcus, echo=FALSE, results='asis'}
+kable(GetSummary(params$dataReport@SelectedData)$Enterococcus)
+```
+
+### Таблица 3. Видовая структура Enterococcus sp.
+
+```{r enterococcusSpecies, echo=FALSE, results='asis'}
+kable(GetEnterococcusSpecTable(params$dataReport@SelectedData))
+```
+
+## II.	Стафилококки
+
+### Таблица 4. Сводная информация по группе «стафилококки»
+
+```{r stapH, echo=FALSE, results='asis'}
+kable(GetSummary(params$dataReport@SelectedData)$Staph)
+```
+
+### Таблица 5. Видовая структура Staphylococcus sp.
+
+```{r staphSpec, echo=FALSE, results='asis'}
+kable(GetStaphSpecTable(params$dataReport@SelectedData))
+```
+
+## III.	Энтеробактерии
+
+### Таблица 6. Сводная информация по группе «энтеробактерии»
+
+```{r entBact, echo=FALSE, results='asis'}
+kable(GetSummary(params$dataReport@SelectedData)$EBC)
+```
+
+### Таблица 7. Видовая структура Энтеробактерий
+
+```{r ebcSpec, echo=FALSE, results='asis'}
+kable(GetEbcSpecTable(params$dataReport@SelectedData))
+```
+
+## IV.	Неферментирующие грамотрицательные бактерии
+
+### Таблица 8. Сводная информация по группе «НГОБ»
+
+```{r NFR, echo=FALSE, results='asis'}
+kable(GetSummary(params$dataReport@SelectedData)$NFR)
+```
+
+### Таблица 9. Видовая структура НГОБ
+
+```{r nfrSpec, echo=FALSE, results='asis'}
+kable(GetNfrSpecTable(params$dataReport@SelectedData))
+```
+
+## V.	грибы рода Candida
+
+### Таблица 10. Сводная информация по группе «Candida»
+
+```{r cand, echo=FALSE, results='asis'}
+kable(GetSummary(params$dataReport@SelectedData)$Cand)
+```
+
+### Таблица 11. Видовая структура Candida sp.
+
+```{r candSpec, echo=FALSE, results='asis'}
+kable(GetCandSpecTable(params$dataReport@SelectedData))
+```
